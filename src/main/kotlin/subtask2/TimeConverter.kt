@@ -2,7 +2,6 @@ package subtask2
 
 class TimeConverter {
 
-    // TODO: Complete the following function
     fun toTextFormat(hour: String, minute: String): String {
         var h = hour.toInt()
         var min = minute.toInt()
