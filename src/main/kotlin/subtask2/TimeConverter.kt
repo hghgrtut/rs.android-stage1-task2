@@ -3,29 +3,31 @@ package subtask2
 class TimeConverter {
 
     fun toTextFormat(hour: String, minute: String): String {
-        var h = hour.toInt()
+        val h = hour.toInt()
         var min = minute.toInt()
         var resultString = ""
         if (h in 0..12 && min in 0..60){
-            if (min==0) resultString += digitToText(h) + " o' clock"
-            else if (min == 30) resultString += "half past " + digitToText(h)
-            else if (min == 15) resultString += "quarter past " + digitToText(h)
-            else if (min == 45) resultString += if (h!=12) "quarter to " + digitToText(h+1) else "quater to one"
-            else if (min<30){
-                resultString += digitToText(min) + " minute"
-                if (min!=1) resultString+="s"
-                resultString += " past " + digitToText(h)}
-            else {
-                min=60-min
-                resultString += digitToText(min) + " minute"
-                if (min!=1) resultString+="s"
-                resultString += if (h!=12) " to " +  digitToText(h+1) else " to one"
+            when {
+                min==0 -> resultString += digitToText(h) + " o' clock"
+                min == 30 -> resultString += "half past " + digitToText(h)
+                min == 15 -> resultString += "quarter past " + digitToText(h)
+                min == 45 -> resultString += if (h!=12) "quarter to " + digitToText(h+1) else "quarter to one"
+                min<30 -> {
+                    resultString += digitToText(min) + " minute"
+                    if (min!=1) resultString+="s"
+                    resultString += " past " + digitToText(h)}
+                else -> {
+                    min=60-min
+                    resultString += digitToText(min) + " minute"
+                    if (min!=1) resultString+="s"
+                    resultString += if (h!=12) " to " +  digitToText(h+1) else " to one"
+                }
             }
         }
         return resultString
     }
 
-    fun digitToText(digit: Int): String{
+    private fun digitToText(digit: Int): String{
         return when (digit){
             0 -> "zero"
             1 -> "one"

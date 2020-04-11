@@ -4,13 +4,10 @@ import java.time.DateTimeException
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.Month
-import java.util.*
 
 class DateFormatter {
 
     fun toTextDay(day: String, month: String, year: String): String {
-        val locale = Locale("ru")
-        Locale.setDefault(locale)
         val dayNum = day.toInt()
         val monthNum = month.toInt()
         val yearNum = year.toInt()

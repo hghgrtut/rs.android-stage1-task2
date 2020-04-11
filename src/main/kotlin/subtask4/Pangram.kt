@@ -20,7 +20,7 @@ class Pangram {
                 if (!i.isWhitespace() && last.isWhitespace()) numberOfWords++
                 last=i
             }
-            var arr :Array<Pair<Int,String>> = Array(numberOfWords) {Pair(0,"")}
+            val arr :Array<Pair<Int,String>> = Array(numberOfWords) {Pair(0,"")}
             val vowels: Array<Char> = arrayOf('a','e','i','o','u','y')
             var tempIndex=0
             while(tempIndex<inputString.length && inputString[tempIndex].isWhitespace()) tempIndex++
@@ -50,7 +50,7 @@ class Pangram {
                     numberOfWords++
                 last=i
             }
-            var arr :Array<Pair<Int,String>> = Array(numberOfWords) {Pair(0,"")}
+            val arr :Array<Pair<Int,String>> = Array(numberOfWords) {Pair(0,"")}
             val consonants: Array<Char> = arrayOf('B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Z')
             var tempIndex=0
             while(tempIndex<inputString.length && inputString[tempIndex].isWhitespace()) tempIndex++
