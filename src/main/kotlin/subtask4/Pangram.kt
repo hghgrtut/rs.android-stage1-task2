@@ -2,77 +2,56 @@ package subtask4
 
 class Pangram {
 
-    fun getResult(inputString: String): String {
+    fun getResult(inputString: String): String { return pairing(inputString, isPangram(inputString)) }
+
+    private fun getFormattedResult(numberOfWords: Int, arr: Array<Pair<Int, String>>):String{
+        var result=""
+        if (numberOfWords>0) result+=arr[0].first.toString()+arr[0].second
+        for (i in 1 until numberOfWords) result +=" "+arr[i].first.toString()+arr[i].second
+        return result
+    }
+
+    private fun countWords(string: String): Int{
+        var numberOfWords=0
+        var last=' '
+        for (i in string) {
+            if (!i.isWhitespace() && last.isWhitespace())
+                numberOfWords++
+            last=i
+        }
+        return numberOfWords
+    }
+
+    private fun pairing(string: String, isPangram: Boolean): String{
+        val numberOfWords=countWords(string)
+        val arr :Array<Pair<Int,String>> = Array(numberOfWords) {Pair(0,"")}
+        val consonants: Array<Char> = arrayOf('B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Z')
+        val vowels: Array<Char> = arrayOf('A','E','I','O','U','Y')
+        val target = if (isPangram) vowels else consonants
+        var tempIndex=0
+        for (i in 0 until numberOfWords){
+            var numberOfTarget=0
+            var tempString=""
+            while(tempIndex<string.length && string[tempIndex].isWhitespace()) {tempIndex++}
+            while(tempIndex<string.length && !string[tempIndex].isWhitespace()){
+                tempString += if(target.contains(string[tempIndex].toUpperCase())) {
+                    numberOfTarget++
+                    string[tempIndex].toUpperCase()
+                } else string[tempIndex]
+                tempIndex++
+            }
+            arr[i]=Pair(numberOfTarget, tempString)
+        }
+        arr.sortBy { it.first }
+        return getFormattedResult(numberOfWords, arr)
+    }
+
+    private fun isPangram(string: String): Boolean{
         var searched ='a'
-        var isPangram = true
         while (searched<='z'){
-            if (!inputString.contains(searched) && !inputString.contains(searched.toUpperCase())){
-                isPangram=false
-                break
-            }
-            searched++
-        }
-        var resultString=""
-        if (isPangram){
-            var numberOfWords=0
-            var last=' '
-            for (i in inputString) {
-                if (!i.isWhitespace() && last.isWhitespace()) numberOfWords++
-                last=i
-            }
-            val arr :Array<Pair<Int,String>> = Array(numberOfWords) {Pair(0,"")}
-            val vowels: Array<Char> = arrayOf('a','e','i','o','u','y')
-            var tempIndex=0
-            while(tempIndex<inputString.length && inputString[tempIndex].isWhitespace()) tempIndex++
-            var tempString: String
-            var numberOfVowels: Int
-            for (i in 0 until numberOfWords){
-                numberOfVowels=0
-                tempString=""
-                while(tempIndex<inputString.length && !inputString[tempIndex].isWhitespace()){
-                    if(vowels.contains(inputString[tempIndex].toLowerCase())) {
-                        numberOfVowels++
-                        tempString+=inputString[tempIndex].toUpperCase()
-                    } else {tempString+=inputString[tempIndex]}
-                    tempIndex++
-                }
-                while(tempIndex<inputString.length && inputString[tempIndex].isWhitespace()) tempIndex++
-                arr[i]=Pair(numberOfVowels, tempString)
-            }
-            arr.sortBy { it.first }
-            if (numberOfWords>0) resultString+=arr[0].first.toString()+arr[0].second
-            for (i in 1 until numberOfWords) resultString+=" "+arr[i].first.toString()+arr[i].second
-        } else{
-            var numberOfWords=0
-            var last=' '
-            for (i in inputString) {
-                if (!i.isWhitespace() && last.isWhitespace())
-                    numberOfWords++
-                last=i
-            }
-            val arr :Array<Pair<Int,String>> = Array(numberOfWords) {Pair(0,"")}
-            val consonants: Array<Char> = arrayOf('B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Z')
-            var tempIndex=0
-            while(tempIndex<inputString.length && inputString[tempIndex].isWhitespace()) tempIndex++
-            var tempString: String
-            var numberOfConsonants: Int
-            for (i in 0 until numberOfWords){
-                numberOfConsonants=0
-                tempString=""
-                while(tempIndex<inputString.length && !inputString[tempIndex].isWhitespace()){
-                    if(consonants.contains(inputString[tempIndex].toUpperCase())) {
-                        numberOfConsonants++
-                        tempString+=inputString[tempIndex].toUpperCase()
-                    } else {tempString+=inputString[tempIndex]}
-                    tempIndex++
-                }
-                while(tempIndex<inputString.length && inputString[tempIndex].isWhitespace()) {tempIndex++}
-                arr[i]=Pair(numberOfConsonants, tempString)
-            }
-            arr.sortBy { it.first }
-            if (numberOfWords>0) resultString+=arr[0].first.toString()+arr[0].second
-            for (i in 1 until numberOfWords) resultString+=" "+arr[i].first.toString()+arr[i].second
-        }
-        return resultString
+            if (!string.contains(searched) && !string.contains(searched.toUpperCase())) return false
+            else searched++}
+        return true
     }
 }
+
