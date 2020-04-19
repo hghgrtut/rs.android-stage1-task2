@@ -9,7 +9,7 @@ class Blocks {
 
     fun getData(blockA: Array<*>, blockB: KClass<*>): Any {
         return when (blockB) {
-            LocalDate :: class -> blockA.filterIsInstance<LocalDate>().max()!!.format(DateTimeFormatter.ofPattern("dd.MM.YYYY"))//В декабре почему-то на год больше
+            LocalDate :: class -> blockA.filterIsInstance<LocalDate>().max()!!.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
             String :: class -> blockA.filterIsInstance<String>().joinToString("")
             else -> blockA.filterIsInstance<Int>().sum()
         }
